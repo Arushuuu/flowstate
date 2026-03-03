@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState | Your Period Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="auth-card" class="card">
+            <h1 class="logo">FlowState</h1>
+            
+            <div id="login-box">
+                <h2>Welcome Back</h2>
+                <input type="email" id="login-email" placeholder="Email">
+                <input type="password" id="login-pass" placeholder="Password">
+                <button onclick="handleLogin()">Login</button>
+                <p class="toggle-text">Need an account? <span onclick="toggleAuth()">Sign Up</span></p>
+            </div>
+
+            <div id="signup-box" class="hidden">
+                <h2>Create Account</h2>
+                <input type="text" id="reg-name" placeholder="Full Name">
+                <input type="number" id="reg-age" placeholder="Your Age">
+                <input type="email" id="reg-email" placeholder="Email">
+                <input type="password" id="reg-pass" placeholder="Password">
+                <button onclick="handleSignup()">Join FlowState</button>
+                <p class="toggle-text">Already have an account? <span onclick="toggleAuth()">Login</span></p>
+            </div>
+        </div>
+
+        <div id="tracker-card" class="card hidden">
+            <h2 id="user-greeting">Hello!</h2>
+            <div class="input-section">
+                <label>Date of last period start:</label>
+                <input type="date" id="cycle-start-date">
+                <button onclick="calculateCycles()">Track My Flow</button>
+            </div>
+
+            <div id="cycle-results" class="hidden">
+                <div class="main-result">
+                    <h3>Next Period Starts:</h3>
+                    <p id="next-period-date" class="highlight">--</p>
+                </div>
+                <div class="phase-grid">
+                    <div class="phase-item">
+                        <h4>Follicular</h4>
+                        <p id="follicular-info">--</p>
+                    </div>
+                    <div class="phase-item">
+                        <h4>Ovulation</h4>
+                        <p id="ovulation-info">--</p>
+                    </div>
+                    <div class="phase-item">
+                        <h4>Luteal</h4>
+                        <p id="luteal-info">--</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
