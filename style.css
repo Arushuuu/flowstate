@@ -37,7 +37,7 @@ body {
     border-radius: 24px;
     box-shadow: 0 15px 35px var(--shadow);
     width: 100%;
-    max-width: 450px;
+    max-width: 550px; /* Increased from 450px */
     text-align: center;
     transition: all 0.3s ease;
 }
@@ -177,4 +177,25 @@ button:hover {
 .fc-button-primary {
     background-color: var(--red) !important;
     border-color: var(--red) !important;
+}
+.fc .fc-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1.5em !important;
+}
+
+.fc .fc-button {
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+}
+
+/* 3. Remove the weird scrollbars/arrows in the header */
+.fc-col-header {
+    width: 100% !important;
+}
+
+.fc-scrollgrid-sync-table {
+    width: 100% !important;
 }
