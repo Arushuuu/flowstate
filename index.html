@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlowState | Your Period Companion</title>
+    
     <link rel="stylesheet" href="style.css">
+    
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div class="container">
         <div id="auth-card" class="card">
             <h1 class="logo">FlowState</h1>
@@ -32,10 +38,19 @@
 
         <div id="tracker-card" class="card hidden">
             <h2 id="user-greeting">Hello!</h2>
+            
             <div class="input-section">
-                <label>Date of last period start:</label>
-                <input type="date" id="cycle-start-date">
-                <button onclick="calculateCycles()">Track My Flow</button>
+                <div class="input-group">
+                    <label>Last Period Start Date:</label>
+                    <input type="date" id="cycle-start-date">
+                </div>
+                
+                <div class="input-group">
+                    <label>Days of Bleeding:</label>
+                    <input type="number" id="period-duration" placeholder="e.g., 5" min="1" max="10">
+                </div>
+                
+                <button onclick="calculateCycles()">Update My Calendar</button>
             </div>
 
             <div id="cycle-results" class="hidden">
@@ -43,6 +58,7 @@
                     <h3>Next Period Starts:</h3>
                     <p id="next-period-date" class="highlight">--</p>
                 </div>
+
                 <div class="phase-grid">
                     <div class="phase-item">
                         <h4>Follicular</h4>
@@ -58,8 +74,16 @@
                     </div>
                 </div>
             </div>
+
+            <hr class="divider">
+
+            <div id="calendar-container">
+                <h3>Cycle Forecast</h3>
+                <div id="calendar"></div>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
