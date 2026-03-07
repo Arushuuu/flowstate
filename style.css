@@ -1,201 +1,52 @@
-/* 1. Global Variables & Reset */
 :root {
     --pink: #FFD1DC;
     --light-pink: #FFF5F7;
     --red: #E91E63;
     --dark-red: #C2185B;
     --white: #FFFFFF;
-    --shadow: rgba(233, 30, 99, 0.15);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--light-pink);
     font-family: 'Inter', sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     padding: 20px;
-}
-
-/* 2. Layout Containers */
-.container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    min-height: 100vh;
 }
 
 .card {
     background: var(--white);
-    padding: 2.5rem;
-    border-radius: 24px;
-    box-shadow: 0 15px 35px var(--shadow);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     width: 100%;
-    max-width: 550px; /* Increased from 450px */
+    max-width: 600px; /* Wider for the calendar */
     text-align: center;
-    transition: all 0.3s ease;
 }
 
-/* 3. Typography & Brand */
-.logo { 
-    color: var(--red); 
-    font-size: 2.5rem; 
-    margin-bottom: 0.5rem; 
-    font-weight: 800;
-}
-
-h2 { 
-    color: var(--dark-red); 
-    margin-bottom: 1.5rem; 
-    font-weight: 600;
-}
-
-h3 {
-    color: var(--dark-red);
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-}
-
-/* 4. Inputs & Forms */
-.input-group {
-    text-align: left;
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--dark-red);
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--pink);
-    border-radius: 12px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    border-color: var(--red);
-}
-
-button {
-    width: 100%;
-    background: var(--red);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 1rem;
-}
-
-button:hover {
-    background: var(--dark-red);
-    transform: translateY(-1px);
-}
-
-/* 5. Logic Display (Results) */
+.logo { color: var(--red); font-size: 2.2rem; margin-bottom: 1rem; }
 .hidden { display: none !important; }
 
-.toggle-text { 
-    font-size: 0.9rem; 
-    cursor: pointer; 
-    color: var(--dark-red); 
-    margin-top: 15px; 
-}
+/* Form Styles */
+.input-section { margin: 20px 0; text-align: left; }
+.input-group { margin-bottom: 15px; }
+label { display: block; font-weight: 600; color: var(--dark-red); margin-bottom: 5px; }
+input { width: 100%; padding: 12px; border: 2px solid var(--pink); border-radius: 10px; margin-bottom: 10px; }
+button { width: 100%; background: var(--red); color: white; border: none; padding: 14px; border-radius: 10px; cursor: pointer; font-weight: bold; }
 
-.toggle-text span {
-    text-decoration: underline;
-    font-weight: 600;
-}
+/* Results Styles */
+.highlight { font-size: 2rem; color: var(--red); font-weight: 800; margin: 10px 0; }
+.phase-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 20px 0; }
+.phase-item { background: var(--light-pink); padding: 10px; border-radius: 10px; border: 1px solid var(--pink); }
+.phase-item h4 { font-size: 0.8rem; color: var(--red); margin-bottom: 5px; }
+.phase-item p { font-size: 0.75rem; }
 
-.highlight { 
-    font-size: 1.8rem; 
-    color: var(--red); 
-    font-weight: 800;
-    margin: 10px 0;
-}
-
-.phase-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr; 
-    gap: 10px; 
-    margin-top: 20px; 
-}
-
-.phase-item { 
-    background: var(--light-pink); 
-    padding: 10px; 
-    border-radius: 10px; 
-    font-size: 0.75rem; 
-    border: 1px solid var(--pink);
-}
-
-.phase-item h4 { 
-    margin-bottom: 5px; 
-    color: var(--red); 
-}
-
-.divider {
-    border: 0;
-    border-top: 1px solid var(--pink);
-    margin: 25px 0;
-}
-
-/* 6. Calendar Styling */
-#calendar-container {
-    margin-top: 10px;
-}
-
-#calendar {
-    max-width: 100%;
-    background: #fff;
-    padding: 5px;
-    border-radius: 12px;
-    font-size: 0.75rem; /* Smaller font to fit in card */
-}
-
-/* FullCalendar Customization */
-.fc-toolbar-title {
-    font-size: 1rem !important;
-    color: var(--dark-red);
-}
-
-.fc-button-primary {
-    background-color: var(--red) !important;
-    border-color: var(--red) !important;
-}
-.fc .fc-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 1.5em !important;
-}
-
-.fc .fc-button {
-    padding: 4px 8px !important;
-    font-size: 0.8rem !important;
-}
-
-/* 3. Remove the weird scrollbars/arrows in the header */
-.fc-col-header {
-    width: 100% !important;
-}
-
-.fc-scrollgrid-sync-table {
-    width: 100% !important;
-}
+/* CALENDAR FIXES */
+#calendar { margin-top: 20px; border-top: 1px solid var(--pink); padding-top: 20px; }
+.fc .fc-toolbar { display: flex; flex-direction: column; gap: 10px; } /* Stack buttons for mobile/small cards */
+.fc-toolbar-title { font-size: 1.1rem !important; color: var(--dark-red); }
+.fc .fc-button-primary { background-color: var(--red) !important; border: none !important; }
+.fc-daygrid-day-number { font-size: 0.8rem; text-decoration: none; color: #333; }

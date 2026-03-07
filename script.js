@@ -1,23 +1,25 @@
 const API_BASE = "http://localhost:3000/api";
 let calendar;
 
-// Initialize the Calendar UI
 document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        headerToolbar: { left: 'prev,next today', center: 'title', right: '' }
+        height: 'auto',
+        headerToolbar: {
+            left: 'prev,next',
+            center: 'title',
+            right: 'today'
+        }
     });
     calendar.render();
 });
 
-// Switch between Login and Signup
 function toggleAuth() {
     document.getElementById('login-box').classList.toggle('hidden');
     document.getElementById('signup-box').classList.toggle('hidden');
 }
 
-// Signup Function
 async function handleSignup() {
     const name = document.getElementById('reg-name').value;
     const age = document.getElementById('reg-age').value;
@@ -34,7 +36,6 @@ async function handleSignup() {
     if (res.ok) toggleAuth();
 }
 
-// Login Function
 async function handleLogin() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-pass').value;
@@ -49,12 +50,13 @@ async function handleLogin() {
         document.getElementById('auth-card').classList.add('hidden');
         document.getElementById('tracker-card').classList.remove('hidden');
         document.getElementById('user-greeting').innerText = `Welcome, ${data.user.name}!`;
+        // Delay render to ensure container is visible
+        setTimeout(() => calendar.render(), 100);
     } else {
         alert(data.message);
     }
 }
 
-// Core Tracker Logic
 function calculateCycles() {
     const startInput = document.getElementById('cycle-start-date').value;
     const duration = parseInt(document.getElementById('period-duration').value) || 5;
@@ -63,34 +65,30 @@ function calculateCycles() {
 
     const startDate = new Date(startInput);
 
+    const getFormattedDate = (baseDate, daysToAdd) => {
+        const d = new Date(baseDate);
+        d.setDate(d.getDate() + daysToAdd);
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
     const getISODate = (baseDate, daysToAdd) => {
         const d = new Date(baseDate);
         d.setDate(d.getDate() + daysToAdd);
         return d.toISOString().split('T')[0];
     };
 
-    // Update Text Results
-    document.getElementById('next-period-date').innerText = new Date(getISODate(startDate, 28)).toLocaleDateString();
+    // 1. Populate Text Phase Results
+    document.getElementById('next-period-date').innerText = getFormattedDate(startDate, 28);
+    document.getElementById('follicular-info').innerText = `${getFormattedDate(startDate, 0)} - ${getFormattedDate(startDate, 12)}`;
+    document.getElementById('ovulation-info').innerText = getFormattedDate(startDate, 13);
+    document.getElementById('luteal-info').innerText = `${getFormattedDate(startDate, 14)} - ${getFormattedDate(startDate, 27)}`;
+    
     document.getElementById('cycle-results').classList.remove('hidden');
 
-    // Update Calendar Events
+    // 2. Update Calendar Events
     calendar.removeAllEvents();
-
-    // 1. Predicted Period (Highlights the number of bleeding days)
-    calendar.addEvent({
-        title: 'Predicted Period',
-        start: getISODate(startDate, 28),
-        end: getISODate(startDate, 28 + duration),
-        color: '#E91E63'
-    });
-
-    // 2. Ovulation Day
-    calendar.addEvent({
-        title: 'Ovulation Day',
-        start: getISODate(startDate, 13),
-        color: '#FFD1DC',
-        textColor: '#C2185B'
-    });
+    calendar.addEvent({ title: 'Predicted Period', start: getISODate(startDate, 28), end: getISODate(startDate, 28 + duration), color: '#E91E63' });
+    calendar.addEvent({ title: 'Ovulation', start: getISODate(startDate, 13), color: '#FFD1DC', textColor: '#C2185B' });
 
     calendar.gotoDate(getISODate(startDate, 28));
 }
