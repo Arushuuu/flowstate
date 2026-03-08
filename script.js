@@ -1,4 +1,4 @@
-const API_BASE = "https://flowstate-menstrual-tracker.onrender.com";
+const API_BASE = "https://flowstate-menstrual-tracker.onrender.com/api";
 let calendar;
 
 document.addEventListener('DOMContentLoaded', function() {
